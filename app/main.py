@@ -1,6 +1,7 @@
 import uvicorn
 
 from fastapi import FastAPI
+from mangum import Mangum
 
 import uuid
 
@@ -63,6 +64,8 @@ def get_gif(key: str = None, name: str = None, tags: str = None):
         gifs = []
     return {"gifs": [gif.serialize() for gif in gifs]}
 
+
+handler = Mangum(app=app)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
