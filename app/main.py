@@ -8,6 +8,7 @@ import uuid
 
 import boto3
 
+from app.constants import GIF_BUCKET
 from constants import (
     REGION,
     VIDEO_BUCKET,
@@ -39,7 +40,7 @@ def read_root():
 def create_gif(gif_data: GifCreateModel):
     # create DynamoDB entry
     hash_key = str(uuid.uuid4())
-    image_url = f"https://{RAW_VIDEOS_DIR}.s3.{REGION}.amazonaws.com/{RAW_VIDEOS_DIR}/{hash_key}"
+    image_url = f"https://{GIF_BUCKET}.s3.{REGION}.amazonaws.com/{hash_key}"
     if not Gif.exists():
         Gif.create_table(
             read_capacity_units=READ_CAPACITY_UNITS,

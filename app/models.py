@@ -1,3 +1,4 @@
+from fastapi import UploadFile
 from pydantic import BaseModel
 from pynamodb import attributes
 from pynamodb.indexes import GlobalSecondaryIndex, AllProjection
@@ -32,4 +33,4 @@ class Gif(Model):
 
 class GifCreateModel(BaseModel):
     name: str
-    image_file: str
+    image_file: UploadFile

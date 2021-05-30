@@ -5,3 +5,4 @@ pynamodb~=5.0.3
 boto3~=1.17.84
 mangum~=0.11.0
 pydantic~=1.8.2
+python-multipart~=0.0.5
