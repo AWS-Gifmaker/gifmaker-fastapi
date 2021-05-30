@@ -2,6 +2,7 @@ import uvicorn
 
 from fastapi import FastAPI
 from mangum import Mangum
+from fastapi.middleware.cors import CORSMiddleware
 
 import uuid
 
@@ -17,6 +18,16 @@ from constants import (
 from models import Gif, GifCreateModel
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
