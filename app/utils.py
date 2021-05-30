@@ -1,6 +1,6 @@
 import boto3
 
-from constants import GIF_TABLE
+from .constants import GIF_TABLE
 
 
 def get_object_url(bucket: str, key: str) -> str:
