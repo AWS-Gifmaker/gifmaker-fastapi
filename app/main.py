@@ -8,15 +8,14 @@ import uuid
 
 import boto3
 
-from app.constants import GIF_BUCKET
-from constants import (
+from app.constants import (
     REGION,
     VIDEO_BUCKET,
     RAW_VIDEOS_DIR,
     READ_CAPACITY_UNITS,
-    WRITE_CAPACITY_UNITS,
+    WRITE_CAPACITY_UNITS, GIF_BUCKET,
 )
-from models import Gif, GifCreateModel
+from app.models import Gif, GifCreateModel
 
 app = FastAPI()
 

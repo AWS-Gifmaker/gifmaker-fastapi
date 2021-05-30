@@ -1,8 +1,29 @@
 # main deps
-fastapi~=0.65.1
-uvicorn~=0.13.4
-pynamodb~=5.0.3
-boto3~=1.17.84
-mangum~=0.11.0
-pydantic~=1.8.2
-python-multipart~=0.0.5
+fastapi==0.65.1
+uvicorn==0.13.4
+pynamodb==5.0.3
+boto3==1.17.84
+mangum==0.11.0
+pydantic==1.8.2
+python-multipart==0.0.5
+pytest==6.2.4
+
+# subdependencies
+attrs==21.2.0
+botocore==1.20.84
+click==7.1.2
+h11==0.12.0
+iniconfig==1.1.1
+jmespath==0.10.0
+packaging==20.9
+pluggy==0.13.1
+py==1.10.0
+pyparsing==2.4.7
+python-dateutil==2.8.1
+s3transfer==0.4.2
+six==1.16.0
+starlette==0.14.2
+toml==0.10.2
+typing-extensions==3.10.0.0
+urllib3==1.26.5
+requests==2.25.1
