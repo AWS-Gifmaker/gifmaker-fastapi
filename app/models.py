@@ -4,7 +4,7 @@ from pynamodb import attributes
 from pynamodb.indexes import GlobalSecondaryIndex, AllProjection
 from pynamodb.models import Model
 
-from .constants import READ_CAPACITY_UNITS, WRITE_CAPACITY_UNITS
+from app.constants import READ_CAPACITY_UNITS, WRITE_CAPACITY_UNITS
 
 
 class NameIndex(GlobalSecondaryIndex):
