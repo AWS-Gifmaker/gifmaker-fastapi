@@ -1,4 +1,3 @@
-from fastapi import UploadFile
 from pydantic import BaseModel
 from pynamodb import attributes
 from pynamodb.indexes import GlobalSecondaryIndex, AllProjection
@@ -16,6 +15,15 @@ class NameIndex(GlobalSecondaryIndex):
     name = attributes.UnicodeAttribute(hash_key=True)
 
 
+class TagsIndex(GlobalSecondaryIndex):
+    class Meta:
+        read_capacity_units = READ_CAPACITY_UNITS
+        write_capacity_units = WRITE_CAPACITY_UNITS
+        projection = AllProjection()
+
+    tags = attributes.UnicodeSetAttribute(hash_key=True)
+
+
 class Gif(Model):
     class Meta:
         table_name = "gifs"
@@ -26,6 +34,7 @@ class Gif(Model):
     name_index = NameIndex()
     name = attributes.UnicodeAttribute()
     image_url = attributes.UnicodeAttribute()
+    tags_index = TagsIndex()
     tags = attributes.UnicodeSetAttribute()
     ready = attributes.BooleanAttribute(default=False)
     visits = attributes.NumberAttribute(default=0)
@@ -33,4 +42,4 @@ class Gif(Model):
 
 class GifCreateModel(BaseModel):
     name: str
-    image_file: UploadFile
+    image_file: str

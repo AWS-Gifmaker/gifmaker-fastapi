@@ -71,6 +71,9 @@ def get_gif(key: str = None, name: str = None, tags: str = None):
     elif tags:
         tags = tags.split(",")
         gifs = []
+        for tag in tags:
+            # convoluted list comprehension removes duplicates (repeating keys)
+            gifs += [gif for gif in Gif.scan(Gif.tags.contains(tag)) if gif.key not in [gif.key for gif in gifs]]
     else:
         gifs = []
     return {"gifs": [gif.serialize() for gif in gifs]}
