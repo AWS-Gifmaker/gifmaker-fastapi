@@ -1,5 +1,3 @@
-import uuid
-
 from pydantic import BaseModel
 from pynamodb import attributes
 from pynamodb.indexes import GlobalSecondaryIndex, AllProjection
