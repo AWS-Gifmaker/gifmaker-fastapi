@@ -39,7 +39,7 @@ def create_gif(gif_data: GifCreateModel):
         image_url=image_url,
         name=gif_data.name,
     )
-    gif.save() # TODO(tkarwowski): gifs are not being created!!!
+    gif.save()
 
     # upload file to S3
     s3 = boto3.resource("s3")
