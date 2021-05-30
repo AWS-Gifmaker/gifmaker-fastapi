@@ -35,11 +35,11 @@ jobs:
       # Step 5
       - name: Activate and Install Depencies into Virtual env
         run: python -m venv venv && source venv/bin/activate &&
-          pip3 install -r requirements.txt
+          pip3 install -r requirements.txt && pip install pytest
         if: steps.cache-venv.outputs.cache-hit != 'true'
       # Step 6
       - name: Activate venv and Run Test
-        run: . venv/bin/activate #&& pytest
+        run: . venv/bin/activate && pytest
 
       # Step 7
       - name: Create Zipfile archive of Dependencies
@@ -49,7 +49,7 @@ jobs:
 
       # Step 8
       - name: Add App to Zip file
-        run: cd ./app && zip -g ../api.zip -r .
+        run: cd ./app2 && zip -g ../api.zip -r .
 
       # Step 9
       - name: Upload zip file artifact

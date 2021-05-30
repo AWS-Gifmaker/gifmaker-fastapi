@@ -7,14 +7,14 @@ import uuid
 
 import boto3
 
-from constants import (
+from .constants import (
     REGION,
     VIDEO_BUCKET,
     RAW_VIDEOS_DIR,
     READ_CAPACITY_UNITS,
     WRITE_CAPACITY_UNITS,
 )
-from models import Gif, GifCreateModel
+from .models import Gif, GifCreateModel
 
 app = FastAPI()
 
