@@ -104,9 +104,8 @@ def update_top_results(gif: Gif):
     if len(ranking) < RANKING_LEN or gif.visits > min([gif["visits"] for gif in ranking]):
         # avoid duplicating gif in ranking list
         if gif.key not in [x["key"] for x in ranking]:
-            # ranking list not full, simply add current gif
             ranking.append({"key": gif.key, "visits": gif.visits})
-            ranking = sorted(ranking, key=lambda x: x.get("visits", 0))[:RANKING_LEN]
+            ranking = sorted(ranking, key=lambda x: x.get("visits", 0), reverse=True)[:RANKING_LEN]
             top_results.ranking = json.dumps(ranking)
             top_results.save()
 
@@ -127,6 +126,22 @@ def get_gif(key: str):
     update_top_results(gif)
 
     return gif.serialize()
+
+
+@app.get("/top-gifs/{query}")
+def top_gifs(query: str):
+    try:
+        top_results = TopResults.get(query)
+    except TopResults.DoesNotExist:
+        print(f"No top results with query '{query}' yet, creating entry")
+        top_results = TopResults(key=query)
+        top_results.save()
+        return []
+
+    ranking = json.loads(top_results.ranking)
+    gifs = sorted(Gif.batch_get([gif["key"] for gif in ranking]), key=lambda x: x.visits, reverse=True)
+
+    return {"gifs": [gif.serialize() for gif in gifs]}
 
 
 handler = Mangum(app=app)
