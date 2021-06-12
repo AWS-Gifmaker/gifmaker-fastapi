@@ -30,10 +30,20 @@ class Gif(Model):
         write_capacity_units = WRITE_CAPACITY_UNITS
 
     key = attributes.UnicodeAttribute(hash_key=True)
-    visits = attributes.NumberAttribute(default=0, range_key=True)
+    visits = attributes.NumberAttribute(default=0)
     name_index = NameIndex()
     name = attributes.UnicodeAttribute()
     image_url = attributes.UnicodeAttribute()
     tags_index = TagsIndex()
     tags = attributes.UnicodeSetAttribute()
     ready = attributes.BooleanAttribute(default=False)
+
+
+class TopResults(Model):
+    class Meta:
+        table_name = "top-results"
+        read_capacity_units = READ_CAPACITY_UNITS
+        write_capacity_units = WRITE_CAPACITY_UNITS
+
+    key = attributes.UnicodeAttribute(hash_key=True)
+    ranking = attributes.UnicodeAttribute(default="[]")
