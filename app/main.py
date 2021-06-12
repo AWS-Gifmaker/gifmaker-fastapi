@@ -51,6 +51,7 @@ def create_gif(name: str, gif_file: UploadFile = File(...)):
         key=hash_key,
         image_url=image_url,
         name=name,
+        visits=0,
     )
     gif.save()
 
