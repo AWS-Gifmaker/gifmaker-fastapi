@@ -80,6 +80,8 @@ def list_gifs(key: str = None, name: str = None, tags: str = None):
     else:
         gifs = []
 
+    gifs = [gif for gif in gifs if gif.ready]
+
     return {"gifs": [gif.serialize() for gif in gifs]}
 
 
@@ -89,6 +91,9 @@ def get_gif(key: str):
         gif = Gif.get(key)
     except Gif.DoesNotExist:
         raise HTTPException(status_code=404, detail="Gif with given key not found")
+
+    if not gif.ready:
+        raise HTTPException(status_code=422, detail="Gif not ready")
 
     gif.visits += 1
     gif.save()
