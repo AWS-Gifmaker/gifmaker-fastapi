@@ -7,7 +7,7 @@ Run:
 ```
 pip install -r requirements.txt
 cd app
-uvicorn main:app
+uvicorn main:app --reload
 ```
 
 Server is ready and listening on http://127.0.0.1:8000/.  

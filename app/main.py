@@ -35,7 +35,7 @@ def read_root():
     return ""
 
 
-@app.post("/gifs/create")
+@app.post("/gifs")
 def create_gif(name: str, gif_file: UploadFile = File(...)):
     contents = gif_file.file.read()
 
