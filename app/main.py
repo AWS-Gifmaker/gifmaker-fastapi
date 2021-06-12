@@ -1,6 +1,6 @@
 import uvicorn
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from mangum import Mangum
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -15,7 +15,7 @@ from constants import (
     READ_CAPACITY_UNITS,
     WRITE_CAPACITY_UNITS, GIF_BUCKET,
 )
-from models import Gif, GifCreateModel
+from models import Gif
 
 app = FastAPI()
 
@@ -36,7 +36,9 @@ def read_root():
 
 
 @app.post("/gifs/create")
-def create_gif(gif_data: GifCreateModel):
+def create_gif(name: str, gif_file: UploadFile = File(...)):
+    contents = gif_file.file.read()
+
     # create DynamoDB entry
     hash_key = str(uuid.uuid4())
     image_url = f"https://{GIF_BUCKET}.s3.{REGION}.amazonaws.com/{hash_key}"
@@ -48,7 +50,7 @@ def create_gif(gif_data: GifCreateModel):
     gif = Gif(
         key=hash_key,
         image_url=image_url,
-        name=gif_data.name,
+        name=name,
     )
     gif.save()
 
@@ -56,7 +58,7 @@ def create_gif(gif_data: GifCreateModel):
     s3 = boto3.resource("s3")
     s3.Bucket(VIDEO_BUCKET).put_object(
         Key=f"{RAW_VIDEOS_DIR}/{hash_key}",
-        Body=gif_data.image_file,
+        Body=contents,
     )
 
     return {"id": hash_key, "name": gif.name, "image_url": image_url}

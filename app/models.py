@@ -1,4 +1,3 @@
-from pydantic import BaseModel
 from pynamodb import attributes
 from pynamodb.indexes import GlobalSecondaryIndex, AllProjection
 from pynamodb.models import Model
@@ -31,15 +30,10 @@ class Gif(Model):
         write_capacity_units = WRITE_CAPACITY_UNITS
 
     key = attributes.UnicodeAttribute(hash_key=True)
+    visits = attributes.NumberAttribute(default=0, range_key=True)
     name_index = NameIndex()
     name = attributes.UnicodeAttribute()
     image_url = attributes.UnicodeAttribute()
     tags_index = TagsIndex()
     tags = attributes.UnicodeSetAttribute()
     ready = attributes.BooleanAttribute(default=False)
-    visits = attributes.NumberAttribute(default=0)
-
-
-class GifCreateModel(BaseModel):
-    name: str
-    image_file: str
