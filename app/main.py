@@ -41,7 +41,7 @@ def create_gif(name: str, gif_file: UploadFile = File(...)):
 
     # create DynamoDB entry
     hash_key = str(uuid.uuid4())
-    image_url = f"https://{GIF_BUCKET}.s3.{REGION}.amazonaws.com/{hash_key}"
+    image_url = f"https://{GIF_BUCKET}.s3.{REGION}.amazonaws.com/{hash_key}.gif"
     if not Gif.exists():
         Gif.create_table(
             read_capacity_units=READ_CAPACITY_UNITS,
@@ -58,7 +58,7 @@ def create_gif(name: str, gif_file: UploadFile = File(...)):
     # upload file to S3
     s3 = boto3.resource("s3")
     s3.Bucket(VIDEO_BUCKET).put_object(
-        Key=f"{RAW_VIDEOS_DIR}/{hash_key}",
+        Key=f"{RAW_VIDEOS_DIR}/{hash_key}.mov",
         Body=contents,
     )
 
