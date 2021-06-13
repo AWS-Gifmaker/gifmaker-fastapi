@@ -14,8 +14,8 @@ from constants import (
     REGION,
     VIDEO_BUCKET,
     RAW_VIDEOS_DIR,
-    READ_CAPACITY_UNITS,
-    WRITE_CAPACITY_UNITS, GIF_BUCKET, RANKING_LEN,
+    GIF_BUCKET,
+    RANKING_LEN,
 )
 from models import Gif, TopResults
 
@@ -77,6 +77,8 @@ def list_gifs(key: str = None, name: str = None, tags: str = None):
         tags = tags.split(",")
         gifs = []
         for tag in tags:
+            # remove whitespaces and capitalize, as this is how tags are stored in dynamo
+            tag = tag.strip().capitalize()
             # convoluted list comprehension removes duplicates (repeating keys)
             gifs += [gif for gif in Gif.scan(Gif.tags.contains(tag)) if gif.key not in [gif.key for gif in gifs]]
     else:
